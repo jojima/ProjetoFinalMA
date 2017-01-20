@@ -1,0 +1,6 @@
+﻿Link para o esquemático do projeto:
+http://www.schematics.com/project/caixapet-projetofinalma-beatriz-fabio-47460/
+
+Changelog:
+20-01-2017: 	Criado o esquemático do projeto. Incluso o Arduino UNO, o relé, a lâmpada, uma fonte de energia (tomada), o sensor de temperatura e o controlador do sensor.
+		Precisa ser adicionado o buffer (para a emissão de sons aconchegantes) e controlador do mesmo.
