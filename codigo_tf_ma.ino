@@ -1,22 +1,31 @@
-#include <SD.h>
+#include <pcmConfig.h>
+#include <pcmRF.h>
 #include <TMRpcm.h>
-#include <SPI.h>
 
+#include <SD.h>
+#include <SPI.h>
+#define SD_ChipSelectPin 53
 //declarações
 int sensorTemperatura = A0;
 int sinalRele = 10;
 TMRpcm tmrpcm; //estrutura que contem funcoes para reproduzir o som
-
+int time = 0;
 void setup() {
  //declaração de pinos
  pinMode (sinalRele, OUTPUT);
- tmrpcm.speakerPin = 9; //5,6,11 ou 46 on Mega, 9 no Uno, Nano, etc
+ tmrpcm.speakerPin = 11; //5,6,11 ou 46 on Mega, 9 no Uno, Nano, etc
  //pode ser utilizado outra saida como auxiliar para o som
+ pinMode(53, OUTPUT);
+ pinMode(10, OUTPUT); // Como não estamos usando ethernet é necessário desativar esta porta, explicitamente
+ digitalWrite(10, HIGH); // Para isso, deixe em alto para desativar
  Serial.begin(9600); //Inicializa a conexão serial com o computador
   if (!SD.begin(4)) { //para o nano utiliza o 4
     Serial.println(" failed!"); //caso nao seja possivel ler o cartao sd
     while(true);
+    //return;
   }
+  Serial.println("Inicializacao completa!");
+  //tmrpcm.play("oi.wav");
  }
  
 void loop() {
@@ -26,18 +35,12 @@ void loop() {
   //corvertendo a leitura para voltagem
   float volt = leituraSensor * 5.0;
   volt /= 1024.0;
-
-  // File myFile = SD.open("coracao.wav");
-  // if (!myFile) {
-    //Erro se nao abrir o arquivo .wav
-    // Serial.println("Nao foi possivel abrir coracao.wav");
-    //fica em idle
-    // while (true);
-  // }
-
-  // const int S = 1024; // Tamanho (size) do buffer a ser utilizado
-  // short buffer[S];
-  tmrpcm.play("heartbeats.wav"); //reproduz o arquivo "heartbeats.wav"
+  if(time == 0 || time - millis() >= 50000)
+  {
+    time = millis();
+    tmrpcm.play("oi.wav");
+  }
+  
   //convertendo a temperatura de fahrenheit para Celsius
   float temperatura = (volt - 0.5) * 10; 
   
