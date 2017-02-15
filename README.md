@@ -19,4 +19,4 @@ Deixar uma caixa ou abrigo para filhotes aconchegante utilizando um arduino.
  - Shield para sensores
  
 # Esquemático
-![Esquemático](/Esquematico.png)
+![Esquematico](/Esquematico.PNG)
